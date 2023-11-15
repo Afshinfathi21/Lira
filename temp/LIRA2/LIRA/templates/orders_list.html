@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h3>سبد خرید</h3>
+{% for product in products %}
+
+<div class="order_list">
+    
+    <div class="product">
+        <h4>{{product.name}}</h4>
+        <h4>{{cart_id}}</h4>
+    </div>
+</div>
+
+
+{% endfor %}
+
+
+
+{% endblock  %}

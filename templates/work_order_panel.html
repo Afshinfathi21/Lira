@@ -1,0 +1,154 @@
+{% include "base.html" %}
+
+
+
+{% block content %}
+<style>
+    /* Style for the panel container */
+    .panel {
+        display: flex;
+        align-items: flex-start;
+        /* Align items to the top */
+        justify-content: space-between;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        margin-top: 50px;
+    }
+
+    .order_form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    /* Style for the list-group container */
+    .list-group {
+        flex: 1;
+        /* Expand to fill available space */
+        border-right: 1px solid #ccc;
+        /* Add a border on the right side */
+        padding-right: 10px;
+        /* Add some padding to separate the border from the content */
+    }
+
+    /* Style for list-group items */
+    .list-group-item {
+        cursor: pointer;
+    }
+
+    /* Style for list-group details */
+    .list-group-item-detail {
+        flex: 1;
+        /* Expand to fill available space */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        text-align: right;
+        direction: rtl;
+    }
+    .list-group-item-detail-second {
+        display: none;
+    }
+
+    form.bootstrap {
+        text-align: right;
+        /* Right-align the form content for Arabic text */
+    }
+
+    .errorlist {
+        color: red;
+    }
+
+    .center-button {
+        text-align: center;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    /* Add some responsive styling */
+    @media (min-width: 768px) {
+        form {
+            max-width: 720px;
+        }
+    }
+</style>
+<div class="panel">
+    <!-- List-Group -->
+    <ul class="list-group">
+        <li class="list-group-item active" onclick="toggleDetails(1)">لیست سفارش ها</li>
+        <li class="list-group-item" onclick="toggleDetails(2)">سفارش جدید</li>
+    </ul>
+
+    <!-- List-Group Detail -->
+    <div class="list-group-item-detail" id="list-group-detail-1">
+        <h3>لیست سفارش های قبلی</h3>
+        <ul>
+            {% for order in orders %}
+                <li>
+                    <strong>سفارش {{ forloop.counter }}</strong> : {{ order.description }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="list-group-item-detail-second" id="list-group-detail-2" style="display: none;">
+        <div class="order_form">
+            <form method="post" enctype="multipart/form-data" class="bootstrap">
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <div class="center-button">
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript to handle list-group item clicks
+    const listGroupItems = document.querySelectorAll('.list-group-item');
+
+    listGroupItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            // Remove the 'active' class from all items
+            listGroupItems.forEach((item) => {
+                item.classList.remove('active');
+            });
+
+            // Add 'active' class to the clicked item
+            item.classList.add('active');
+
+            // Update the detail on the left
+
+        });
+    });
+    function toggleDetails(detailId) {
+        // Hide all detail divs
+        document.querySelectorAll('.list-group-item-detail, .list-group-item-detail-second').forEach(function (el) {
+            el.style.display = 'none';
+        });
+
+        // Show the selected detail div
+        document.getElementById(`list-group-detail-${detailId}`).style.display = 'block';
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h3 class="mt-4">سبد خرید</h3>
+
+  {% if products %}
+    <form method="post" action="">
+      {% csrf_token %}
+      <table class="table mt-4">
+        <thead>
+          <tr>
+            <th scope="col">نام محصول</th>
+            <th scope="col">تعداد</th>
+            <th scope="col">قیمت واحد (تومان)</th>
+            <th scope="col">قیمت کل (تومان)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+            <tr>
+              <td>{{ product.name }}</td>
+              <td>
+                <button class="plus_minus">+</button>
+                <span class="number" id="number">{{ product.quantity }}</span>
+                <button class="minus_plus">-</button>
+              </td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.total_price }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-primary">بروزرسانی سبد خرید</button>
+    </form>
+  {% else %}
+    <p class="mt-4">سبد خرید شما خالی است.</p>
+  {% endif %}
+</div>
+<script>
+  const plusButtons = document.querySelectorAll('.plus_minus');
+  const minusButtons = document.querySelectorAll('.minus_plus');
+  const numberEl = document.querySelector('#number');
+
+  plusButtons.forEach(plus => {
+    plus.addEventListener('click', () => {
+      let val = parseInt(numberEl.innerText);
+      val++;
+      numberEl.innerText = val;
+    });
+  });
+
+  minusButtons.forEach(minus => {
+    minus.addEventListener('click', () => {
+      let val = parseInt(numberEl.innerText);
+      numberEl.innerText = --val;
+    });
+  });
+</script>
+{% endblock %}

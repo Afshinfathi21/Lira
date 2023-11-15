@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="aperture" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+    stroke-width="2" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />
+  </symbol>
+  <symbol id="cart" viewBox="0 0 16 16">
+    <path
+      d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+  </symbol>
+  <symbol id="chevron-right" viewBox="0 0 16 16">
+    <path fill-rule="evenodd"
+      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+  </symbol>
+</svg>
+
+<style>
+  .nav-item:hover {
+    background-color: #f8f9fa;
+    /* Change the background color on hover */
+  }
+
+  /* Style for the nav-link inside the nav-item on hover */
+  .nav-item:hover .nav-link {
+    color: #007bff;
+    /* Change the text color on hover */
+  }
+  
+  .navbar-brand img {
+    position: relative;
+    top: 0;
+    right: 68%;
+    transform: translateX(-50%);
+
+    width: 90px;
+    mix-blend-mode: color-burn;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-brand {
+      display: none;
+    }
+  }
+</style>
+<nav class="navbar navbar-expand-md bg-light sticky-top border-bottom" data-bs-theme="light">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/media/local/logo.png" alt="Brand logo">
+    </a>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="#offcanvas" aria-labelledby="#offcanvasLabel">
+      <div class="offcanvas-body">
+        <ul class="navbar-nav flex-grow-1 justify-content-between">
+          <li class="nav-item dropdown"> <!-- Nav item with dropdown -->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              لوازم دانش اموزی
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">کیف</a>
+              <a class="dropdown-item" href="#">جا مدادی</a>
+              <a class="dropdown-item" href="#">کتاب</a>
+              <a class="dropdown-item" href="#">دفتر</a>
+              <a class="dropdown-item" href="#">مداد</a>
+              <a class="dropdown-item" href="#">خودکار</a>
+              <a class="dropdown-item" href="#">پاک کن</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown"> <!-- Nav item with dropdown -->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              لوازم اداری
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">کاغذ</a>
+              <a class="dropdown-item" href="#">منگنه</a>
+              <a class="dropdown-item" href="#">کاور</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">ورود / ثبت نام</a></li>
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown"> <!-- Nav item with dropdown -->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              {{user.username}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'work_order' %}">سفارش کار</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}">
+              <svg class="bi" width="24" height="24">
+                <use xlink:href="#cart" />
+                <span class="badge text-bg-secondary">{{user.cart.product.count}}</span>
+              </svg>
+            </a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

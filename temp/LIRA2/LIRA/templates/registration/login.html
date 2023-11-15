@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f7f7f7;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      width: 400px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+    .center-text {
+      text-align: center;
+    }
+    .center-button {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .errorlist {
+      color: red;
+    }
+    /* Adjust the input width to fit within the form */
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form method="post" action="{% url 'login' %}" autocomplete="off">
+      {% csrf_token %}
+      
+      <div class="errorlist">
+        {% if form.errors %}
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">نام کاربری:</label>
+        {{ form.username }}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">رمز عبور:</label>
+        {{ form.password }}
+      </div>
+
+      <div class="center-button">
+        <button type="submit" class="btn btn-primary">ورود</button>
+      </div>
+      <div class="center-text">
+        برای 
+        <a href="{% url 'signup' %}" style="color: blue;">
+          ثبت نام
+        </a>
+        کلیک کنید
+      </div>
+    </form>
+  </div>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
